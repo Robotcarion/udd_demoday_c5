@@ -1,5 +1,5 @@
 import pickle
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
 import pandas as pd
@@ -30,17 +30,15 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # Entrenar el modelo
-model_boost = GradientBoostingClassifier(
-    n_estimators=100,
-    random_state=42
-).fit(X_train_scaled, y_train)
+modelo_rrff = RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced')
+modelo_rrff.fit(X_train_scaled, y_train)
 
 # Guardar el modelo y el scaler
-model_path = 'modelo_boost.pkl'
+model_path = 'mejor_modelo_rrff.pkl'
 scaler_path = 'scaler.pkl'
 
 with open(model_path, 'wb') as f:
-    pickle.dump(model_boost, f)
+    pickle.dump(mejor_modelo_rrff, f)
 
 with open(scaler_path, 'wb') as f:
     pickle.dump(scaler, f)
